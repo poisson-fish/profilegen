@@ -1,111 +1,123 @@
-/**
- * Input prompt example
- */
-
 import fs from 'fs'
 import inquirer from 'inquirer'
-import { licenseTable } from './license.js'
+import Manager from './Manager.cjs'
+import Engineer from './Engineer.cjs'
+import Intern from './Intern.cjs'
 
-
-const questions = [
+const team_manager_questions = [
   {
     type: 'input',
-    name: 'project_title',
-    message: 'Enter a name for your project'
+    name: 'manager_name',
+    message: 'Enter a team manager name'
   },
   {
     type: 'input',
-    name: 'project_description',
-    message: 'Enter a description for your project',
-    default () {
-      return '<no description>'
-    }
+    name: 'manager_id',
+    message: 'Enter a team manager ID'
   },
   {
     type: 'input',
-    name: 'installation_instructions',
-    message: 'Enter some instructions for installing'
+    name: 'manager_email',
+    message: 'Enter a team manager email'
   },
   {
     type: 'input',
-    name: 'usage_information',
-    message: 'Enter some usage information'
+    name: 'manager_officeNumber',
+    message: 'Enter a team manager office number'
+  }
+]
+const engineer_questions = [
+  {
+    type: 'input',
+    name: 'engineer_name',
+    message: 'Enter an engineer name'
   },
   {
     type: 'input',
-    name: 'contrib_guidelines',
-    message: 'Enter some contribution guidelines'
+    name: 'engineer_id',
+    message: 'Enter an engineer ID'
   },
   {
     type: 'input',
-    name: 'test_instructions',
-    message: 'Enter some test instructions'
-  },
-  {
-    type: 'list',
-    name: 'license',
-    message: 'What license do you want?',
-    choices: ['LGPL', 'GPL', 'MIT', 'Apache', 'BSD', 'CC-BY'],
-    filter (val) {
-      return val.toUpperCase()
-    }
+    name: 'engineer_email',
+    message: 'Enter an engineer email'
   },
   {
     type: 'input',
-    name: 'username',
-    message: 'Enter your GitHub Username'
+    name: 'engineer_github',
+    message: 'Enter a GitHub username for engineer'
+  }
+]
+const intern_questions = [
+  {
+    type: 'input',
+    name: 'intern_name',
+    message: 'Enter an intern name'
   },
   {
     type: 'input',
-    name: 'email',
-    message: 'Enter your contact email'
+    name: 'intern_id',
+    message: 'Enter an intern ID'
+  },
+  {
+    type: 'input',
+    name: 'intern_email',
+    message: 'Enter an intern email'
+  },
+  {
+    type: 'input',
+    name: 'intern_school',
+    message: 'Enter a school for intern'
   }
 ]
 
-inquirer.prompt(questions).then((answers) => {
-
-  const readMe = 
-`# ${answers.project_title}
-## Description
-###### ${answers.project_description}
-
-## Table of Contents
- - [Title](https://github.com/${answers.username}/${answers.project_title}#${answers.project_title})
- - [Description](https://github.com/${answers.username}/${answers.project_title}#description)
- - [Table of Contents](https://github.com/${answers.username}/${answers.project_title}#table-of-contents)
- - [Installation](https://github.com/${answers.username}/${answers.project_title}#installation)
- - [Usage](https://github.com/${answers.username}/${answers.project_title}#usage)
- - [Tests](https://github.com/${answers.username}/${answers.project_title}#tests)
- - [License](https://github.com/${answers.username}/${answers.project_title}#license)
-
-## Installation
-${answers.installation_instructions}
-
-## Usage
-${answers.usage_information}
-
-## Contributing
-${answers.contrib_guidelines}
-
-## Tests
-${answers.test_instructions}
-
-## License
-[${answers.license}](https://github.com/${answers.username}/${answers.project_title}/blob/master/LICENSE.md)
-  
-`
-
-fs.writeFile('README.md', readMe, err => {
-  if (err) {
-    console.error(err);
+const employee_type_question = [
+  {
+    type: 'list',
+    name: 'employee_type',
+    message: 'Choose what type of employee to add',
+    choices: ['Engineer', 'Intern', 'Done'],
+    filter (val) {
+      return val.toUpperCase()
+    }
   }
-  console.log("Succesfully wrote README.md")
-});
-fs.writeFile('LICENSE.md', licenseTable.get(answers.license), err => {
-  if (err) {
-    console.error(err);
-  }
-  console.log("Succesfully wrote LICENSE.md")
-});
-  //console.log(JSON.stringify(answers, null, '  '))
+]
+
+
+
+
+const fullTeam = []
+
+async function promptTeamMembers(){
+  var members = []
+  inquirer.prompt(employee_type_question).then((employee_type_answer) => {
+    var askAgain = true
+    switch(employee_type_answer.employee_type){
+      case 'Engineer':
+        inquirer.prompt(engineer_questions).then((engineer_answers) => {
+          members.push(new Engineer(engineer_answers.engineer_id,engineer_answers.engineer_name,engineer_answers.engineer_email,engineer_answers.engineer_github))
+        })
+      break;
+
+      case 'Intern':
+        inquirer.prompt(intern_questions).then((intern_answers) => {
+          members.push(new Intern(intern_answers.intern_id,intern_answers.intern_name,intern_answers.intern_email,intern_answers.intern_school))
+        })
+      break;
+
+      case 'Done':
+        if(employee_type_answer.employee_type === 'Done') askAgain = false
+      break;
+    }
+    if(askAgain){
+      members.push(promptTeamMembers())
+    }
+  })
+  return members
+}
+inquirer.prompt(team_manager_questions).then((team_manager_answer) => {
+  fullTeam.push(new Manager(team_manager_answer.manager_id,team_manager_answer.manager_name,team_manager_answer.manager_email,team_manager_answer.manager_officeNumber))
+}).then(() => {
+  fullTeam.push(promptTeamMembers())
 })
+

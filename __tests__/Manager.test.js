@@ -1,4 +1,4 @@
-const Manager = require('../src/Manager.js');
+const Manager = require('../src/Manager.cjs');
 
 // Employee tests
 test('creating Manager succeeds', () => {

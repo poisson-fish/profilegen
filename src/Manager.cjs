@@ -1,4 +1,4 @@
-const Employee = require('./Employee.js')
+const Employee = require('./Employee.cjs')
 
 class Manager extends Employee {
 

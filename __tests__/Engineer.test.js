@@ -1,4 +1,4 @@
-const Engineer = require('../src/Engineer.js');
+const Engineer = require('../src/Engineer.cjs');
 
 // Employee tests
 test('creating Engineer succeeds', () => {
