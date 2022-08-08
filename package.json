@@ -1,22 +1,22 @@
 {
-  "name": "readmegen",
+  "name": "profilegen",
   "version": "1.0.0",
-  "description": "A generator for Github readmes",
+  "description": "A generator for employee profiles.",
   "type": "module",
   "main": "src/script.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/udidifier/readmegen.git"
+    "url": "git+https://github.com/udidifier/profilegen.git"
   },
   "author": "udidifier",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/udidifier/readmegen/issues"
+    "url": "https://github.com/udidifier/profilegen/issues"
   },
-  "homepage": "https://github.com/udidifier/readmegen#readme",
+  "homepage": "https://github.com/udidifier/profilegen#readme",
   "devDependencies": {
     "eslint": "^8.17.0",
     "eslint-config-standard": "^17.0.0",
@@ -25,6 +25,7 @@
     "eslint-plugin-promise": "^6.0.0"
   },
   "dependencies": {
-    "inquirer": "^9.0.2"
+    "inquirer": "^9.0.2",
+    "jest": "^28.1.3"
   }
 }

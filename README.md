@@ -21,7 +21,7 @@
 Pull request if you see improvements.
 
 ## Tests
-<No test>
+<No tests>
 
 ## License
 [CC-BY](https://github.com/udidifier/readmegen/blob/master/LICENSE.md)
