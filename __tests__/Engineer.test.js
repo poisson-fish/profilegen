@@ -2,7 +2,7 @@ const Engineer = require('../src/Engineer.cjs');
 
 // Employee tests
 test('creating Engineer succeeds', () => {
-  expect(new Engineer("1", "Danny", "danny@danny.com", "somegithub")).toBeDefined();
+  expect(new Engineer("1", "Danny", "danny@danny.com", "somegithub")).toBeDefined()
 });
 test('engineer has getName', () => {
     expect(new Engineer(1, "Danny", "danny@danny.com", "somegithub").getName()).toEqual("Danny")

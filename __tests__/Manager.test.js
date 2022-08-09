@@ -2,7 +2,7 @@ const Manager = require('../src/Manager.cjs');
 
 // Employee tests
 test('creating Manager succeeds', () => {
-  expect(new Manager("1", "Danny", "danny@danny.com", 1)).toBeDefined();
+  expect(new Manager("1", "Danny", "danny@danny.com", 1)).toBeDefined()
 });
 test('Manager has getName', () => {
     expect(new Manager(1, "Danny", "danny@danny.com", 1).getName()).toEqual("Danny")
