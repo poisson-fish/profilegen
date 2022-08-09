@@ -21,3 +21,7 @@ test('Intern has getRole', () => {
 test('Intern has getSchool', () => {
     expect(new Intern(1, "Danny", "danny@danny.com", "MIT").getSchool()).toEqual("MIT")
 });
+
+test('Intern has renderToHtml', () => {
+    expect(new Intern(1, "Danny", "danny@danny.com", "MIT").renderToHtml()).toBeDefined()
+});

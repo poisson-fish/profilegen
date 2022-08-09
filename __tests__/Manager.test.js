@@ -21,3 +21,7 @@ test('Manager has getRole', () => {
 test('Manager has getOfficeNumber', () => {
     expect(new Manager(1, "Danny", "danny@danny.com", 1).getOfficeNumber()).toEqual(1)
 });
+
+test('Manager has renderToHtml', () => {
+    expect(new Manager(1, "Danny", "danny@danny.com", 1).renderToHtml()).toBeDefined()
+});

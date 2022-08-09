@@ -21,3 +21,7 @@ test('engineer has getRole', () => {
 test('Engineer has getGithub', () => {
     expect(new Engineer(1, "Danny", "danny@danny.com", "somegithub").getGithub()).toEqual("somegithub")
 });
+
+test('Engineer has renderToHtml', () => {
+    expect(new Engineer(1, "Danny", "danny@danny.com", "somegithub").renderToHtml()).toBeDefined()
+});

@@ -86,6 +86,7 @@ const employeeTypeQuestion = [
 const fullTeam = []
 
 function buildUX () {
+  
   console.log(fullTeam)
 }
 
