@@ -3,6 +3,7 @@ import inquirer from 'inquirer'
 import Manager from './Manager.cjs'
 import Engineer from './Engineer.cjs'
 import Intern from './Intern.cjs'
+import body from './generators/body.cjs'
 
 const teamManagerQuestions = [
   {
@@ -83,14 +84,20 @@ const employeeTypeQuestion = [
   }
 ]
 
-const fullTeam = []
+function buildUX (fullTeam) {
+  const teamHtml = fullTeam.map((member) => `${member.renderToHtml()}`).join('')
+  const wholePage = body(teamHtml)
 
-function buildUX () {
-  
-  console.log(fullTeam)
+  fs.writeFile('./dist/index.html', wholePage, err => {
+    if (err) {
+      console.error(err)
+    }
+    console.log('Succesfully wrote dist/index.html')
+  })
+  console.log(wholePage)
 }
 
-async function promptTeamMembers () {
+async function promptTeamMembers (fullTeam) {
   let askAgain = true
   await inquirer.prompt(employeeTypeQuestion).then(async (employeeTypeAnswer) => {
     switch (employeeTypeAnswer.employee_type) {
@@ -112,15 +119,14 @@ async function promptTeamMembers () {
     }
   })
   if (askAgain) {
-    await promptTeamMembers()
-  } else {
-    buildUX()
+    await promptTeamMembers(fullTeam)
   }
 }
 function run () {
+  const fullTeam = []
   inquirer.prompt(teamManagerQuestions).then(async (teamManagerAnswer) => {
     fullTeam.push(new Manager(teamManagerAnswer.manager_id, teamManagerAnswer.manager_name, teamManagerAnswer.manager_email, teamManagerAnswer.manager_officeNumber))
-    promptTeamMembers()
-  })
+    await promptTeamMembers(fullTeam)
+  }).then(() => buildUX(fullTeam))
 }
 run()

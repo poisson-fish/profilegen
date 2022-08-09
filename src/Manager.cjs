@@ -16,11 +16,15 @@ class Manager extends Employee {
   renderToHtml () {
     return `
     <div class="card text-center" style="width: 18rem;">
+        <div class="card-header">
+        Manager
+        </div>
         <div class="card-body">
             <h5 class="card-title">${this.getName()}</h5>
-            <h6 class="card-subtitle mb-1 fw-bold text-muted">${this.getRole()}</h6>
-            <p class="card-text">User has ID#${this.getId()}</p>
-            <a href="#" class="btn btn-primary">${this.getOfficeNumber()}</a>
+            <h6 class="card-subtitle mb-1 text-muted">${this.getRole()}</h6>
+            <p class="card-text">ID: ${this.getId()}</p>
+            <p class="card-text">Office Number: ${this.getOfficeNumber()}</p>
+            <a href="mailto:${this.getEmail()}" class="card-link">Email: ${this.getEmail()}</a>
         </div>
     </div>
     `
